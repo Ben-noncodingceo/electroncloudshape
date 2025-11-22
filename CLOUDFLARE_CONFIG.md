@@ -2,35 +2,47 @@
 
 ## 🎯 最简单的部署方法
 
+### ⚠️ 重要：必须手动设置构建配置！
+
+这是一个**纯静态 HTML 项目**，不需要任何构建步骤。你必须在 Cloudflare Pages Dashboard 中**手动覆盖**默认的构建设置。
+
 ### Cloudflare Pages Dashboard 配置
 
-当你在 Cloudflare Pages 中设置项目时，**请使用以下配置**：
+当你在 Cloudflare Pages 中设置项目时，**必须使用以下配置**：
 
 ```yaml
 框架预设 (Framework preset): None
 
 构建配置:
-  生产分支 (Production branch): main
-  构建命令 (Build command): (留空)
+  生产分支 (Production branch): main (或 claude/electron-cloud-visualizer-01WJpmtAhEYn18LShojqtEQR)
+  构建命令 (Build command): 留空（删除任何默认值！）
   构建输出目录 (Build output directory): /
-  根目录 (Root directory): (留空，使用根目录)
+  根目录 (Root directory): 留空
 ```
 
-### 📋 详细配置截图说明
+### 📋 详细配置步骤
 
-1. **Framework preset**: 选择 `None`（因为这是纯静态 HTML 项目）
+#### 步骤 1: Framework preset
+选择 **`None`**
 
-2. **Build command**:
-   - **留空** （推荐）
-   - 或填写 `npm run build`（只是输出提示信息）
+⚠️ 不要选择任何框架（React、Vue 等），这会导致自动构建失败！
 
-3. **Build output directory**:
-   - 填写 `/`（斜杠）
-   - 这表示使用项目根目录
+#### 步骤 2: Build command
+**完全留空** - 不要填写任何内容
 
-4. **Root directory**:
-   - 留空
-   - 或填写 `/`
+如果 Cloudflare 自动填充了 `npx wrangler deploy` 或其他命令，**必须删除它！**
+
+留空的 build command 告诉 Cloudflare："这是纯静态文件，不需要构建"
+
+#### 步骤 3: Build output directory
+填写 `/` （一个斜杠）
+
+这表示使用项目根目录的所有文件
+
+#### 步骤 4: Root directory
+**留空**（或填写 `/`）
+
+这表示从仓库根目录开始
 
 ---
 
@@ -90,7 +102,35 @@ wrangler pages deploy . --project-name=electron-cloud-visualizer
 
 ## ❌ 常见错误及解决方案
 
-### 错误 1: "Build failed"
+### ⚠️ 错误 1: "Missing entry-point to Worker script" (你遇到的问题！)
+
+**完整错误信息**:
+```
+Executing user deploy command: npx wrangler deploy
+✘ [ERROR] Missing entry-point to Worker script or to assets directory
+```
+
+**原因**:
+- Cloudflare Pages 检测到某种配置，自动执行了 `npx wrangler deploy`
+- 但这个项目是纯静态 HTML，不是 Cloudflare Worker
+
+**解决方案** ✅:
+
+1. **在 Cloudflare Pages Dashboard 中，找到项目设置**
+2. **进入 "Settings" → "Builds & deployments"**
+3. **编辑构建配置**:
+   - **Build command**: 完全删除，留空！
+   - **Build output directory**: 改为 `/`
+
+4. **触发重新部署**:
+   - 进入 "Deployments" 标签
+   - 点击 "Retry deployment"
+
+**关键**: Build command 必须是**完全空白**，不能有任何字符！
+
+---
+
+### 错误 2: "Build failed"
 
 **症状**: 部署失败，提示 build 错误
 
@@ -101,7 +141,7 @@ wrangler pages deploy . --project-name=electron-cloud-visualizer
 Build command: (完全留空，不要填任何内容)
 ```
 
-### 错误 2: "404 Not Found"
+### 错误 3: "404 Not Found"
 
 **症状**: 访问网站显示 404
 
@@ -113,7 +153,7 @@ Build output directory: /
 ```
 注意：是一个斜杠 `/`，不是 `./` 或其他
 
-### 错误 3: "npm: command not found"
+### 错误 4: "npm: command not found"
 
 **症状**: 构建日志显示找不到 npm
 
@@ -124,7 +164,7 @@ Build output directory: /
 Build command: (留空)
 ```
 
-### 错误 4: CDN 资源加载失败
+### 错误 5: CDN 资源加载失败
 
 **症状**: 页面空白，控制台有 CDN 错误
 
