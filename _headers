@@ -1,0 +1,28 @@
+# HTTP Headers for Cloudflare Pages
+
+/*
+  # Security headers
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Performance headers
+  Cache-Control: public, max-age=3600, must-revalidate
+
+  # CORS headers (if needed)
+  Access-Control-Allow-Origin: *
+
+  # Content Security Policy (relaxed for CDN resources)
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data:; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self'
+
+/*.html
+  Cache-Control: public, max-age=1800, must-revalidate
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: application/javascript; charset=utf-8
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: text/css; charset=utf-8

@@ -1,0 +1,27 @@
+# Files to ignore during Cloudflare Pages deployment
+
+# Documentation (optional - can be included if needed)
+# README.md
+# DEPLOYMENT.md
+# CLOUDFLARE_CONFIG.md
+# QUICKSTART.md
+
+# Git files
+.git/
+.gitignore
+
+# Node modules (if any)
+node_modules/
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
