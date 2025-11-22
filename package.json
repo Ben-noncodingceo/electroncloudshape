@@ -1,0 +1,27 @@
+{
+  "name": "electron-cloud-visualizer",
+  "version": "1.0.0",
+  "description": "Interactive electron cloud visualization tool for hydrogen-like atoms",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "build": "echo 'No build required - static HTML project'",
+    "deploy": "echo 'Deploy to Cloudflare Pages'"
+  },
+  "keywords": [
+    "quantum-mechanics",
+    "electron-cloud",
+    "visualization",
+    "chemistry",
+    "physics",
+    "education",
+    "three.js"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ben-noncodingceo/electroncloudshape.git"
+  },
+  "homepage": "https://github.com/Ben-noncodingceo/electroncloudshape#readme"
+}
